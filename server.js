@@ -1,7 +1,15 @@
 require('dotenv').config();
 
-// Import modules
+// Import npm modules
 const express = require('express');
+
+// Import modules
+const { port = 8080, nodeEnv = 'development' } = require('./config/keys');
+
+global.ROOT_DIR = __dirname;
+
+// Load Logger
+global.LOGGER = require('./config/logger');
 
 // Import API routes
 const api = require('./routes/api');
@@ -14,6 +22,4 @@ app.use(express.json());
 // Routes
 app.use('/api', api);
 
-const port = process.env.PORT || 8080;
-
-app.listen(port, () => console.info(`Server up and running in ${process.env.NODE_ENV === 'production' ? 'production' : 'development'} mode, on port ${port} !`));
+app.listen(port, () => global.LOGGER.info(`Server up and running in ${nodeEnv === 'production' ? 'production' : 'development'} mode, on port ${port} !`));
