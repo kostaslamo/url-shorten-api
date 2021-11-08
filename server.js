@@ -6,6 +6,9 @@ const express = require('express');
 // Import modules
 const { port = 8080, nodeEnv = 'development' } = require('./config/keys');
 
+// Import Services
+const mongoDB = require('./services/mongoDB');
+
 global.ROOT_DIR = __dirname;
 
 // Load Logger
@@ -18,6 +21,8 @@ const app = express();
 
 // parses incoming requests with JSON payloads
 app.use(express.json());
+
+mongoDB.connectToMongo();
 
 // Routes
 app.use('/api', api);
