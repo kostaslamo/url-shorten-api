@@ -50,7 +50,14 @@ const saveOriginalGeneratedToDB = async (originalUrl, generatedUrl, metadata = {
   }
 };
 
+const returnOriginalUrlFromDB = async (generatedUrl) => {
+  const urlDB = await Url.findOne({ generatedUrl }).exec();
+  if (urlDB) return urlDB.originalUrl;
+  return null;
+};
+
 module.exports = {
   generateUniqueUrl,
   saveOriginalGeneratedToDB,
+  returnOriginalUrlFromDB,
 };
