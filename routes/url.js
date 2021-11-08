@@ -29,7 +29,7 @@ router.post('/generate', async (req, res) => {
     if (!originalUrl) throw new Error('Provide originalUrl in body request');
     const generatedUrl = await generateUniqueUrl();
     const dbEntry = await saveOriginalGeneratedToDB(originalUrl, generatedUrl, metadata);
-    res.json({ dbEntry });
+    res.json(dbEntry);
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
