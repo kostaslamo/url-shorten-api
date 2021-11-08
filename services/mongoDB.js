@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const { mongoURI } = require('../config/keys');
 
+/**
+ * Connects to MongoDB
+ *
+ * @function connectToMongo
+ */
 const connectToMongo = () => {
   mongoose
     .connect(mongoURI)
