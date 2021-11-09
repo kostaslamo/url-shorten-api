@@ -16,7 +16,7 @@ router.get('/visit', async (req, res) => {
     res.json({ originalURL });
     const data = { url: u, valid: originalURL !== null, ip };
     postVisit(data).catch((dbErr) => {
-      global.LOGGER.error(dbErr.message);
+      global.LOGGER.error(dbErr);
     });
   } catch (e) {
     res.status(400).json({ error: e.message });

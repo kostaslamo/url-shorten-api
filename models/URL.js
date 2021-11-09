@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-// Create Schema
+// Create Schema for URL collection
 const URLSchema = new Schema({
   originalUrl: {
     type: String,

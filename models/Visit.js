@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-// Create Schema
+// Create Schema for Visit Collection
 const VisitSchema = new Schema({
   url: {
     type: String,

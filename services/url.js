@@ -1,4 +1,4 @@
-// Using the asynchronous API of Nano ID, because it uses crypto module to generate IDs that blocks the event loop, using it asynchronously prevents that
+// Using the asynchronous API of Nano ID, as it uses crypto module to generate IDs and its hash functions are known to block the event loop, using it asynchronously prevents that
 const { customAlphabet } = require('nanoid/async');
 
 const Url = require('../models/URL');
@@ -15,6 +15,7 @@ const generateUniqueUrl = async () => {
   try {
     let urlExists = true;
     let generatedUrl;
+    // Just to make sure that uuid generated is not allready in DB
     while (urlExists) {
       // eslint-disable-next-line no-await-in-loop
       const customId = await nanoId();
@@ -50,10 +51,22 @@ const saveOriginalGeneratedToDB = async (originalUrl, generatedUrl, metadata = {
   }
 };
 
+/**
+ * Returon Original Url from generated one
+ *
+ * @function returnOriginalUrlFromDB
+ * @param {string} generatedUrl - The original url.
+ * @return {Promise} String with the original url
+ */
 const returnOriginalUrlFromDB = async (generatedUrl) => {
-  const urlDB = await Url.findOne({ generatedUrl }).exec();
-  if (urlDB) return urlDB.originalUrl;
-  return null;
+  try {
+    const urlDB = await Url.findOne({ generatedUrl }).exec();
+    if (urlDB) return urlDB.originalUrl;
+    return null;
+  } catch (e) {
+    global.LOGGER.error(e);
+    throw e;
+  }
 };
 
 module.exports = {
