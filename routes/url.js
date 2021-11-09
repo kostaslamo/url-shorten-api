@@ -2,7 +2,7 @@ const express = require('express');
 
 // Import Services
 const { generateUniqueUrl, saveOriginalGeneratedToDB, returnOriginalUrlFromDB } = require('../services/url');
-const { postVisit } = require('../services/visit');
+const { postVisit, getVisitsFromUrl } = require('../services/visit');
 
 const router = express.Router();
 
@@ -18,6 +18,28 @@ router.get('/visit', async (req, res) => {
     postVisit(data).catch((dbErr) => {
       global.LOGGER.error(dbErr.message);
     });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+router.get('/stats/:uuid', async (req, res) => {
+  const { uuid } = req.params;
+  try {
+    if (!uuid) throw new Error('Provide uuid in request params');
+    const visits = await getVisitsFromUrl(`tier.app/${uuid}`);
+    if (visits.length > 0) {
+      const stats = visits.reduce(
+        (acc, cur, idx) => {
+          if (cur.ip) acc.ips.push(cur.ip);
+          acc.numOfVisits = idx + 1;
+          acc.lastVisit = new Date(cur.createdAt) > new Date(acc.lastVisit) ? cur.createdAt : acc.lastVisit;
+          return acc;
+        },
+        { ips: [], numOfVisits: 0, lastVisit: new Date(0).toISOString() },
+      );
+      res.json(stats);
+    } else throw new Error('Could not find visits');
   } catch (e) {
     res.status(400).json({ error: e.message });
   }

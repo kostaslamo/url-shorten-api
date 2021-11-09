@@ -21,6 +21,15 @@ const postVisit = (data) =>
       .catch((err) => reject(err));
   });
 
+const getVisitsFromUrl = (url) =>
+  new Promise((resolve, reject) => {
+    Visit.find({ url })
+      .exec()
+      .then((visitsRes) => resolve(visitsRes))
+      .catch((err) => reject(err));
+  });
+
 module.exports = {
   postVisit,
+  getVisitsFromUrl,
 };
