@@ -21,6 +21,13 @@ const postVisit = (data) =>
       .catch((err) => reject(err));
   });
 
+/**
+ * Get Visits From a URL
+ *
+ * @function getVisitsFromUrl
+ * @param {String} url
+ * @return {Promise} Array of visits
+ */
 const getVisitsFromUrl = (url) =>
   new Promise((resolve, reject) => {
     Visit.find({ url })
