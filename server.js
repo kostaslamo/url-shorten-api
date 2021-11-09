@@ -2,12 +2,14 @@ require('dotenv').config();
 
 // Import npm modules
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
 
 // Import modules
 const { port = 8080, nodeEnv = 'development' } = require('./config/keys');
 
 // Import Services
 const mongoDB = require('./services/mongoDB');
+const swaggerDocument = require('./swagger.json');
 
 global.ROOT_DIR = __dirname;
 
@@ -21,6 +23,7 @@ const app = express();
 
 // parses incoming requests with JSON payloads
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 mongoDB.connectToMongo();
 

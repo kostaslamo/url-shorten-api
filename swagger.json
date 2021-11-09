@@ -1,0 +1,154 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API for creating short URLs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api/",
+      "description": "Internal staging server for testing"
+    }
+  ],
+  "paths": {
+    "/url/generate": {
+      "post": {
+        "summary": "Generates and Returns a Short URL",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "originalUrl": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A JSON object with the details of the generated URL. Property 'generatedUrl' is a unique URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A JSON object with an error property",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/url/visit": {
+      "get": {
+        "summary": "Visit a generated URL",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "u",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The generated URL you want to visit (e.x tier.app/6LoxHqt)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object with the original URL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A JSON object with an error property",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/url/stats/{uuid}": {
+      "get": {
+        "summary": "Get Stats For a URL",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The uuid of the generated URL to get stats (e.x 6LoxHqt)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object with the Stats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A JSON object with an error property",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
