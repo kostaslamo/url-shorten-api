@@ -9,17 +9,19 @@ const router = express.Router();
 router.get('/visit', async (req, res) => {
   const { u } = req.query;
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.socket.remoteAddress;
+  let originalURL;
   try {
     if (!u) throw new Error('Provide u in queryString');
-    const originalURL = await returnOriginalUrlFromDB(u);
-    // first return response with the originalURL and then write visit to DB
+    originalURL = await returnOriginalUrlFromDB(u);
+    if (!originalURL) throw new Error('URL not found');
     res.json({ originalURL });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  } finally {
     const data = { url: u, valid: originalURL !== null, ip };
     postVisit(data).catch((dbErr) => {
       global.LOGGER.error(dbErr);
     });
-  } catch (e) {
-    res.status(400).json({ error: e.message });
   }
 });
 
