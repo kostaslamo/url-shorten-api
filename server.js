@@ -1,4 +1,6 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+if (process.env.NODE_ENV !== 'production') dotenv.config();
 
 // Import npm modules
 const express = require('express');
@@ -30,4 +32,4 @@ mongoDB.connectToMongo();
 // Routes
 app.use('/api', api);
 
-app.listen(port, () => global.LOGGER.info(`Server up and running in ${nodeEnv === 'production' ? 'production' : 'development'} mode, on port ${port} !`));
+app.listen(port, () => global.LOGGER.info(`Server up and running in ${nodeEnv === 'production' ? 'production' : 'development'} mode, on port ${port}.`));

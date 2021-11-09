@@ -1,4 +1,6 @@
 .env
+server-prod-variables.env
 node_modules
 logs/
 TODO.md
+db/

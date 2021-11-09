@@ -1,0 +1,20 @@
+version: '3'
+services:
+  nodejs-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '8090:8080'
+    container_name: nodejs-api
+    env_file:
+      - server-prod-variables.env
+    links:
+      - mongo-db
+  mongo-db:
+    container_name: mongo-db
+    image: mongo:4.2.17
+    ports:
+      - '27018:27017'
+    volumes:
+      - ./db/:/data/db

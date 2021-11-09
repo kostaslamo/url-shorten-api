@@ -6,8 +6,12 @@
   },
   "servers": [
     {
+      "url": "http://localhost:8090/api/",
+      "description": "Dockerized APP"
+    },
+    {
       "url": "http://localhost:8080/api/",
-      "description": "Internal staging server for testing"
+      "description": "Local APP"
     }
   ],
   "paths": {
