@@ -4,7 +4,8 @@
   "description": "API for generating and returning short links",
   "main": "server.js",
   "scripts": {
-    "develop": "nodemon"
+    "develop": "nodemon",
+    "docker": "docker-compose up --build --detach"
   },
   "author": "Konstantinos Lamogiannis",
   "license": "ISC",
