@@ -4,3 +4,4 @@ node_modules
 logs/
 TODO.md
 db/
+.DS_Store
