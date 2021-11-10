@@ -2,8 +2,8 @@
 
 ## Stack
 
-- [Express](http://expressjs.com/) and [NodeJS](https://nodejs.org/en/) for the backend.
-- [Docker](https://www.docker.com/) for building docker images and containerizing application.
+- [Express](http://expressjs.com/) and [NodeJS 16.12](https://nodejs.org/docs/latest-v16.x/api/index.html) for the backend.
+- [Docker](https://docs.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) for building docker images and containerizing application.
 
 ## Quick Start
 
